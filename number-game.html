@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" >
+	<head>
+	  <meta charset="UTF-8">
+	  <title>NUMBER GAME</title>
+	</head>
+	<body>
+		<h1>Number Game</h1>
+   		<p>Build a game in js with following rules</p>
+    	<ul>
+        	<li>User has 1000 INR when he starts the game</li>
+        	<li>Every try(click on start) is charged 100 INR</li>
+        	<li>Game is over if user has less than 100 INR</li>
+        	<li>Every try generates three random numbers, each random number is in 0-9 range</li>
+        	<li>If all the numbers are odd/even (eg. 2 4 6), user gets 300 INR</li>
+        	<li>If the numbers are in sequence with difference of 1 in any order (eg. 2 3 4 or 3 2 4 or 4 6 5), user gets 800 INR</li>
+        	<li>If all the numbers are same (eg. 4 4 4), user gets 1000 INR</li>
+        	<li>Else user gets no money</li>
+    	</ul>
+		<div>
+			<h3>Game</h3>
+			<h4> Random Numbers Are</h4>
+	  			<div id ="random1"></div>
+	  			<div id ="random2"></div>
+	  			<div id ="random3"></div>
+	  		<p id="moneyLeft"></p>
+	  		<div id="message"></div><br>
+			<button id="startButton" type="button" onclick="start(0,10)">Start</button>
+
+		</div>
+		
+		<script type="text/javascript">
+
+			var  INR= 1000;
+			document.getElementById('moneyLeft').innerHTML = "You have " + INR + " INR";
+
+		function start(min, max) 
+		{
+			var d1 = Math.floor(Math.random() * (max - min)) + min;
+			var d2 = Math.floor(Math.random() * (max - min)) + min;
+			var d3 = Math.floor(Math.random() * (max - min)) + min;
+				
+			document.getElementById('random1').innerHTML = d1;
+			document.getElementById('random2').innerHTML = d2;
+			document.getElementById('random3').innerHTML = d3 ;
+						
+		  	if((((d1%2)==0) && ((d2%2)==0) && ((d3%2)==0))&& ((d1!=d2) || (d1!=d3)))
+		  	{
+				INR+=200;
+				document.getElementById('moneyLeft').innerHTML = "You have " + (INR) + " INR";
+				document.getElementById('message').innerHTML = "You have won 300 INR as all the numbers are even";
+			}
+
+			else if((((d1%2)!=0) && ((d2%2)!=0) && ((d3%2)!=0))&& ((d1!=d2) || (d1!=d3)))
+			{
+				INR+=200;
+				document.getElementById('moneyLeft').innerHTML = "You have " + (INR) + " INR";
+				document.getElementById('message').innerHTML = "You have won 300 INR as all the numbers are odd";
+			}
+
+			else if((d1==d2)&& (d1==d3))
+			{
+				INR+=900;
+				document.getElementById('moneyLeft').innerHTML = "You have " + (INR) + " INR";
+				document.getElementById('message').innerHTML = "You have won 1000 INR as all the numbers are same";
+			}
+
+			else if((((Math.abs(d1-d2)==1)&&(Math.abs(d2-d3)==1))||((Math.abs(d1-d3)==1)&&(Math.abs(d2-d3)==1))||((Math.abs(d1-d2)==1)&&(Math.abs(d1-d3)==1))) && ((d1!=d2) && (d1!=d3) && (d2!=d3)))
+			{
+				INR+=700;
+				document.getElementById('moneyLeft').innerHTML = "You have " + (INR) + " INR";
+				document.getElementById('message').innerHTML = "You have won 800 INR as the numbers are in sequence";
+			}
+
+			else if(INR<=100)
+			{
+				document.getElementById('message').innerHTML = "Game Over";
+				document.getElementById('moneyLeft').innerHTML = "You have 0 INR";
+				document.getElementById('startButton').innerHTML = "Game Over";
+				document.getElementById('startButton').disabled=true;
+			}
+
+			else 
+			{
+				INR-=100;
+				document.getElementById('moneyLeft').innerHTML = "You have " + (INR) + " INR";
+				document.getElementById('message').innerHTML = "You were not lucky this time";
+			}		
+		}
+</script>
+</div>
+</body>
+</html>
